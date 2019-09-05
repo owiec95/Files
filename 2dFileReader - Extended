@@ -1,0 +1,55 @@
+import java.io.*;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        File file1 = new File("board.txt");
+        Board b = new Board(file1);
+        b.printBoard(file1);
+
+    }
+}
+
+class Board {
+
+String[][] boardArray = null;
+    Board(File f) throws FileNotFoundException, IOException{
+        Scanner sc = new Scanner(f);
+        int totalRows = countRows(f);
+        int totalColumns = countColumns(f);
+        boardArray = new String[totalRows][totalColumns];
+        for (int row = 0; sc.hasNextLine() && row < totalRows; row++){
+            String[] temporary = sc.nextLine().split(" ");
+            for (int column = 0; column < totalColumns && column < temporary.length; column++){
+                boardArray[row][column] = temporary[column];
+            }
+        }
+    }
+    public String[][] getBoard() {
+        return boardArray;
+    }
+    public void printBoard(File file) throws IOException {
+        for (int i = 0; i < Board.countRows(file); i++){
+            System.out.println(" ");
+            for (int y = 0; y < Board.countColumns(file); y++){
+                System.out.print(boardArray[i][y] + " ");
+            }
+        }
+    }
+    public static int countRows(File file) throws IOException{
+        int totalRows = 0;
+        FileReader fileReader = new FileReader(file);
+        LineNumberReader lnr = new LineNumberReader(fileReader);
+        while (lnr.readLine()!= null){
+            totalRows++;
+        }
+        return totalRows;
+    }
+    public static int countColumns(File file) throws FileNotFoundException {
+        Scanner sc = new Scanner(file);
+        String[] columns = sc.nextLine().split(" ");
+        int totalColumns = columns.length;
+        return totalColumns;
+    }
+}
