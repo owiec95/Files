@@ -7,7 +7,6 @@ public class Main {
         File file1 = new File("board.txt");
         Board b = new Board(file1);
         b.printBoard(file1);
-
     }
 }
 
